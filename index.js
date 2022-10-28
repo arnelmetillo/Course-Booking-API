@@ -1,10 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+// Cors - used to communication si front-end, which is si Postman, to our back-end
 const cors = require("cors");
+const userRoutes = require("./routes/user.js");
 
 const app = express();
 
-mongoose.connect("mongodb+srv://admin:admin123@zuitt.inau6u6.mongodb.net/Course-Booking?retryWrites=true&w=majority", {
+// Database Connection
+// Automatic creation of Database na ang name is Course-Booking
+mongoose.connect("mongodb+srv://admin:admin123@zuitt.inau6u6.mongodb.net/Course-Booking-API?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
@@ -15,6 +19,8 @@ mongoose.connection.once("open", () => console.log("Now connected to MongoDB Atl
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+app.use("/users", userRoutes)
 
 // process environment or port
 // process environment is for live hosting / website
