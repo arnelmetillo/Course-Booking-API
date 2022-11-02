@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// Cors - used to communication si front-end, which is si Postman, to our back-end
+// Cors - used to communicate si front-end, which is si Postman, to our back-end
 const cors = require("cors");
 const userRoutes = require("./routes/user.js");
+const courseRoutes = require("./routes/course.js");
 
 const app = express();
 
@@ -20,7 +21,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use("/users", userRoutes)
+// Initializing the routes
+app.use("/users", userRoutes);
+app.use("/courses", courseRoutes);
 
 // process environment or port
 // process environment is for live hosting / website

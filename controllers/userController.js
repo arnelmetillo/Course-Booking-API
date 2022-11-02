@@ -47,6 +47,9 @@ module.exports.loginUser = (reqBody) => {
 	})
 }
 
+/*
+	S38 Activity - Code Along
+*/
 module.exports.getProfile = (data) => {
 	return User.findById(data.userId).then(result => {
 		return result;
