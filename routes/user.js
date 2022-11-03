@@ -27,5 +27,18 @@ router.post("/details", auth.verify, (req, res) => {
 
 	userController.getProfile({userId: userData.id}).then(resultFromController => res.send(resultFromController));
 })
+// Activity code along end
+
+// S41 D1 Router - Code Along Activity
+router.post("/enroll", auth.verify, (req, res) => {
+	let data = {
+		userId: auth.decode(req.headers.authorization).id,
+		isAdmin: auth.decode(req.headers.authorization).isAdmin,
+		courseId: req.body.courseId
+	}
+
+	userController.enroll(data).then(resultFromController => res.send(resultFromController));
+})
+
 
 module.exports = router;

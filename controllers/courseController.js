@@ -49,11 +49,21 @@ module.exports.updateCourse = (courseId, newData) => {
 		description: newData.description,
 		price: newData.price
 	})
-	.then((updatedCourse, error) => {
+	.then((result, error) => {
 		if(error){
 			return false
 		}
-		return true
+
+		result.name = newData.name;
+		result.description = newData.description;
+		result.price = newData.price;
+		return result.save().then((updatedCourse, saveErr) => {
+			if(saveErr){
+				return false;
+			}else{
+				return updatedCourse;
+			}
+		})
 	})
 }
 
@@ -62,10 +72,47 @@ module.exports.archiveCourse = (courseId) => {
 	return Course.findByIdAndUpdate(courseId, {
 		isActive: false
 	})
-	.then((archivedCourse, error) => {
+	.then((result, error) => {
 		if(error) {
 			return false
 		}
+
+		result.isActive = result.isActive;
+		return result.save().then((archivedCourse, saveErr) => {
+			if(saveErr) {
+				return false;
+			}else {
+				return archivedCourse;
+			}
+		})
+	})
+}
+
+// return "true" if no error
+/*module.exports.updateCourse = (courseId, newData) => {
+	return Course.findByIdAndUpdate(courseId, {
+		name: newData.name,
+		description: newData.description,
+		price: newData.price 
+	})
+	.then((updatedCourse, error) => {
+		if(error){
+			return false
+		}
+
 		return true
 	})
 }
+
+module.exports.archiveCourse = (courseId) => {
+	return Course.findByIdAndUpdate(courseId, {
+		isActive: false
+	})
+	.then((archivedCourse, error) => {
+		if(error){
+			return false
+		} 
+
+		return true
+	})
+}*/
